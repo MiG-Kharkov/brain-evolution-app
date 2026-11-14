@@ -1,0 +1,254 @@
+[
+  {
+    "id": "sudoku",
+    "mg_id": 110,
+    "title": {
+      "en": "Sudoku",
+      "ru": "Судоку"
+    },
+    "category": {
+      "en": "Logic",
+      "ru": "Логика"
+    },
+    "desc": {
+      "en": "Classic 9x9 Sudoku puzzles to improve your logic and pattern finding activities.",
+      "ru": "Классические головоломки судоку 9х9 для развития логики и внимания."
+    },
+    "difficulties": [
+      "easy",
+      "med",
+      "hard"
+    ]
+  },
+  {
+    "id": "matches",
+    "mg_id": 106,
+    "title": {
+      "en": "Matches",
+      "ru": "Спички"
+    },
+    "category": {
+      "en": "Logic & Spatial",
+      "ru": "Логика и геометрия"
+    },
+    "desc": {
+      "en": "Move, add, or remove matchsticks to create geometric shapes and solve puzzles.",
+      "ru": "Перемещайте, добавляйте или убирайте спички для создания геометрических фигур."
+    },
+    "difficulties": [
+      "easy",
+      "med",
+      "hard"
+    ]
+  },
+  {
+    "id": "pairs",
+    "mg_id": 112,
+    "title": {
+      "ru": "Пары",
+      "en": "Pairs"
+    },
+    "category": {
+      "en": "Memory",
+      "ru": "Память"
+    },
+    "desc": {
+      "en": "Flip cards and find matching pairs to train your short-term visual memory.",
+      "ru": "Открывайте карточки и находите совпадающие пары для тренировки зрительной памяти."
+    },
+    "difficulties": [
+      "easy",
+      "med",
+      "hard"
+    ]
+  },
+  {
+    "id": "quadronica",
+    "mg_id": 111,
+    "title": {
+      "en": "Quadronica",
+      "ru": "Квадроника"
+    },
+    "category": {
+      "en": "Pattern Recognition",
+      "ru": "Образное мышление"
+    },
+    "desc": {
+      "en": "Find rectangles where all 4 corners have identical colors to make them disappear.",
+      "ru": "Находите прямоугольники, все четыре вершины которых имеют одинаковый цвет."
+    },
+    "difficulties": [
+      "easy",
+      "med",
+      "hard"
+    ]
+  },
+  {
+    "id": "numbers",
+    "mg_id": 108,
+    "title": {
+      "en": "Numbers",
+      "ru": "Числа"
+    },
+    "category": {
+      "en": "Speed & Calculation",
+      "ru": "Скорость и счёт"
+    },
+    "desc": {
+      "ru": "Вставьте цифру в пустую ячейку: она должна равняться последней цифре суммы соседних чисел. Уберите с поля все числа.",
+      "en": "Place a digit in an empty cell equal to the last digit of the sum of its neighbors. Clear all the numbers."
+    },
+    "difficulties": [
+      "easy",
+      "med",
+      "hard"
+    ]
+  },
+  {
+    "id": "arithmetics",
+    "mg_id": 103,
+    "title": {
+      "en": "Arithmetics",
+      "ru": "Арифметика"
+    },
+    "category": {
+      "en": "Calculation",
+      "ru": "Вычисления"
+    },
+    "desc": {
+      "en": "Solve chains of math operations quickly and accurately.",
+      "ru": "Быстро и безошибочно решайте цепочки математических операций."
+    },
+    "difficulties": [
+      "easy",
+      "med",
+      "hard"
+    ]
+  },
+  {
+    "id": "minesweeper",
+    "mg_id": 107,
+    "title": {
+      "en": "Minesweeper",
+      "ru": "Сапёр"
+    },
+    "category": {
+      "en": "Logic",
+      "ru": "Логика"
+    },
+    "desc": {
+      "en": "Clear the grid without detonating any hidden mines.",
+      "ru": "Очистите поле, избегая скрытых мин, ориентируясь по подсказкам-числам."
+    },
+    "difficulties": [
+      "easy",
+      "med",
+      "hard"
+    ]
+  },
+  {
+    "id": "roadblocks",
+    "mg_id": 109,
+    "title": {
+      "en": "Balltracker",
+      "ru": "Препятствия"
+    },
+    "category": {
+      "en": "Spatial Orientation",
+      "ru": "Пространственное мышление"
+    },
+    "desc": {
+      "en": "Roll the ball through the maze to reach the target arrow.",
+      "ru": "Прокатите шар через лабиринт к финишной стрелке."
+    },
+    "difficulties": [
+      "easy",
+      "med",
+      "hard"
+    ]
+  },
+  {
+    "id": "guess_who",
+    "mg_id": 101,
+    "title": {
+      "en": "Guess Who",
+      "ru": "Кто это?"
+    },
+    "category": {
+      "en": "Pattern Finding",
+      "ru": "Внимание к деталям"
+    },
+    "desc": {
+      "ru": "Найдите единственный объект, соответствующий признакам формы, цвета, узора и усиков внизу экрана.",
+      "en": "Find the unique object matching the shape, color, pattern and antenna features shown below the field."
+    },
+    "difficulties": [
+      "easy",
+      "med",
+      "hard"
+    ]
+  },
+  {
+    "id": "memorics",
+    "mg_id": 102,
+    "title": {
+      "en": "Memorics",
+      "ru": "Запоминалка"
+    },
+    "category": {
+      "en": "Short-Term Memory",
+      "ru": "Краткосрочная память"
+    },
+    "desc": {
+      "en": "Memorize the positions of geometric figures on the field and answer questions.",
+      "ru": "Запоминайте расположение геометрических фигур на поле и отвечайте на вопросы."
+    },
+    "difficulties": [
+      "easy",
+      "med",
+      "hard"
+    ]
+  },
+  {
+    "id": "geometry",
+    "mg_id": 114,
+    "title": {
+      "en": "Geometry",
+      "ru": "Геометрия"
+    },
+    "category": {
+      "en": "Visual Memory",
+      "ru": "Зрительная память"
+    },
+    "desc": {
+      "ru": "Запомните фигуру и нарисуйте её копию по точкам. Важны углы, а не размер и положение.",
+      "en": "Remember the figure and draw a copy by placing vertices. Only the angles matter, not size or position."
+    },
+    "difficulties": [
+      "easy",
+      "med",
+      "hard"
+    ]
+  },
+  {
+    "id": "encyclopedia",
+    "mg_id": 105,
+    "title": {
+      "en": "Encyclopedia",
+      "ru": "Энциклопедия"
+    },
+    "category": {
+      "en": "Fact Memory",
+      "ru": "Эрудиция и память"
+    },
+    "desc": {
+      "ru": "Запомните числовые значения на четырёх страницах, затем выберите правильные ответы. Можно выбрать метрическую или американскую систему мер.",
+      "en": "Memorize numeric values on four pages, then choose the correct answers. Select metric or US units."
+    },
+    "difficulties": [
+      "easy",
+      "med",
+      "hard"
+    ]
+  }
+]

@@ -1,0 +1,76 @@
+/* matches — v2 styles (classes prefixed with the game id). */
+.matches-screen .game-footer { background: none; border: 0; color: inherit; text-align: initial; padding: 8px var(--pad) calc(14px + env(safe-area-inset-bottom, 0px)); }
+.matches-screen {
+  --matches-wood: var(--reward);
+  --matches-wood: color-mix(in srgb, var(--reward) 82%, var(--ink) 18%);
+  --matches-head: var(--danger);
+  --matches-dot: var(--ink-3);
+}
+
+.matches-wrap { flex: 1; display: flex; flex-direction: column; gap: 10px; min-width: 0; }
+.matches-play { margin: auto 0; display: flex; flex-direction: column; gap: 8px; min-width: 0; }
+.matches-task { gap: 6px; padding: 12px 14px; }
+.matches-task-head { display: flex; align-items: center; gap: 8px; min-height: 20px; }
+.matches-task-text { margin: 0; color: var(--ink); font-size: var(--fs-m); font-weight: 600; line-height: 1.4; text-wrap: pretty; }
+.matches-meta { display: flex; flex-wrap: wrap; gap: 6px; }
+.matches-meta[hidden] { display: none; }
+.matches-meta .pill { font-size: var(--fs-xs); padding: 3px 9px; }
+.matches-hint.is-alert { color: var(--danger); }
+
+/* The field: a square card that fits the phone width and, on short screens, the height. */
+.matches-field {
+  align-self: center; position: relative;
+  width: min(calc(100% - 2 * var(--pad)), max(260px, calc(100dvh - 380px)));
+  aspect-ratio: 1 / 1; border-radius: var(--r-l); background: var(--surface); box-shadow: var(--shadow-1);
+  border: 2px solid transparent; transition: border-color .2s ease, background-color .2s ease;
+}
+.matches-field.is-wrong { border-color: var(--danger); animation: matches-shake .35s ease; }
+.matches-field.is-solved { border-color: var(--ok); background: color-mix(in srgb, var(--ok-soft) 60%, var(--surface)); }
+.matches-svg { display: block; width: 100%; height: 100%; touch-action: none; user-select: none; -webkit-user-select: none; cursor: pointer; overflow: visible; }
+
+.matches-dot { fill: var(--matches-dot); opacity: .45; }
+.matches-slot { stroke: var(--ink-3); stroke-width: .07; stroke-linecap: round; stroke-dasharray: .14 .16; fill: none; opacity: .55; }
+.matches-slot.is-diagonal { stroke-dasharray: none; stroke-width: .05; }
+
+.matches-stick .matches-body { stroke: var(--matches-wood); stroke-width: .26; stroke-linecap: round; }
+.matches-stick .matches-head { stroke: var(--matches-head); stroke-width: .38; stroke-linecap: round; }
+.matches-stick .matches-halo { stroke: transparent; stroke-width: .72; stroke-linecap: round; }
+.matches-stick.is-selected .matches-halo { stroke: var(--accent); opacity: .32; }
+.matches-stick.is-selected .matches-body { stroke: var(--accent); }
+.matches-stick.is-origin { opacity: .22; }
+.matches-stick.is-ghost .matches-body { stroke: var(--accent); stroke-dasharray: .22 .14; stroke-linecap: butt; opacity: .85; }
+.matches-stick.is-ghost .matches-head { stroke: var(--accent); opacity: .6; }
+.matches-stick.is-lifted { pointer-events: none; filter: drop-shadow(0 .12px .14px rgba(0, 0, 0, .35)); }
+.matches-stick.is-lifted .matches-halo { stroke: var(--accent); opacity: .18; }
+
+.matches-hint { margin: 0 var(--pad); min-height: 2.8em; display: flex; align-items: center; justify-content: center; text-wrap: balance; }
+
+/* Tool row: equal tool buttons and a wider Check. */
+.matches-tools { display: grid; grid-template-columns: repeat(var(--matches-tools, 2), minmax(0, 1fr)) minmax(0, 1.5fr); gap: 8px; }
+.matches-tool {
+  min-height: 58px; min-width: 0; padding: 6px 4px; display: flex; flex-direction: column; align-items: center; justify-content: center; gap: 4px;
+  border: 0; border-radius: 14px; background: var(--surface); box-shadow: var(--shadow-1); color: var(--ink);
+  font: 650 var(--fs-xs)/1.1 var(--font); touch-action: manipulation; transition: transform .06s ease, background-color .12s ease, opacity .12s ease;
+}
+.matches-tool svg { width: 22px; height: 22px; flex: none; }
+/* 3.12.2: up to two lines with hyphenation instead of an ellipsis («Rück-gängig», «In die / Hand» at 320 px). */
+.matches-tool span { max-width: 100%; overflow: hidden; text-align: center; overflow-wrap: break-word; hyphens: auto; -webkit-hyphens: auto;
+  display: -webkit-box; -webkit-box-orient: vertical; -webkit-line-clamp: 2; line-clamp: 2; }
+.matches-tool:active { transform: scale(.96); background: var(--surface-2); }
+.matches-screen .matches-tool:disabled { opacity: .38; transform: none; background: var(--surface); }
+.matches-tool.primary { background: var(--accent); color: var(--accent-ink); font-size: var(--fs-s); font-weight: 750; }
+.matches-tool.primary:active { background: var(--accent); filter: brightness(.95); }
+.matches-tool:focus-visible { outline: 2px solid var(--focus); outline-offset: 2px; }
+
+@keyframes matches-shake { 20%, 60% { transform: translateX(-5px); } 40%, 80% { transform: translateX(5px); } }
+
+@media (max-width: 360px) {
+  .matches-tools { gap: 6px; grid-template-columns: repeat(var(--matches-tools, 2), minmax(0, 1fr)) minmax(0, 1.2fr); }
+  .matches-tool { min-height: 54px; padding: 6px 2px; font-size: 11px; }
+  .matches-tool.primary { font-size: var(--fs-xs); }
+  .matches-task-text { font-size: var(--fs-s); }
+}
+@media (prefers-reduced-motion: reduce) {
+  .matches-field, .matches-tool { transition: none; }
+  .matches-field.is-wrong { animation: none; }
+}

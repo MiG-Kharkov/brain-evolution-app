@@ -1,0 +1,99 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no, viewport-fit=cover">
+  <title>Brain Evolution</title>
+  <meta name="description" content="Brain Evolution: 12 brain-training games, a daily training programme and the Brain Mark test.">
+  <meta name="author" content="Igor Manzhos (https://github.com/MiG-Kharkov); based on Amaze Brain Evolution by Yevhen Chushkin (https://chushkin.github.io/brain-evolution/)">
+  <meta name="theme-color" content="#0f8b7d">
+  <meta name="apple-mobile-web-app-capable" content="yes">
+  <meta name="apple-mobile-web-app-status-bar-style" content="default">
+  <meta name="apple-mobile-web-app-title" content="Brain Evolution">
+  <meta name="mobile-web-app-capable" content="yes">
+  <link rel="manifest" href="manifest.webmanifest">
+  <link rel="apple-touch-icon" href="icons/apple-touch-icon.png">
+  <link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 32 32'%3E%3Crect x='1' y='1' width='30' height='30' rx='9' fill='%230f8b7d'/%3E%3Cpath d='M13 8.5a3 3 0 0 0-3 3 3 3 0 0 0-2 5 3 3 0 0 0 1.5 4.6A3 3 0 0 0 13 24V8.5zM19 8.5a3 3 0 0 1 3 3 3 3 0 0 1 2 5 3 3 0 0 1-1.5 4.6A3 3 0 0 1 19 24V8.5zM13 8.5a3 3 0 0 1 6 0' fill='none' stroke='white' stroke-width='2' stroke-linecap='round' stroke-linejoin='round'/%3E%3C/svg%3E">
+  <link rel="stylesheet" href="css/app.css?v=3.12.4">
+  <link rel="stylesheet" href="css/games/arithmetics.css?v=3.12.4">
+  <link rel="stylesheet" href="css/games/quadronica.css?v=3.12.4">
+  <link rel="stylesheet" href="css/games/memorics.css?v=3.12.4">
+  <link rel="stylesheet" href="css/games/sudoku.css?v=3.12.4">
+  <link rel="stylesheet" href="css/games/pairs.css?v=3.12.4">
+  <link rel="stylesheet" href="css/games/numbers.css?v=3.12.4">
+  <link rel="stylesheet" href="css/games/roadblocks.css?v=3.12.4">
+  <link rel="stylesheet" href="css/games/guess_who.css?v=3.12.4">
+  <link rel="stylesheet" href="css/games/minesweeper.css?v=3.12.4">
+  <link rel="stylesheet" href="css/games/geometry.css?v=3.12.4">
+  <link rel="stylesheet" href="css/games/encyclopedia.css?v=3.12.4">
+  <link rel="stylesheet" href="css/games/matches.css?v=3.12.4">
+</head>
+<body>
+  <div id="splash" class="splash" aria-hidden="true">
+    <svg viewBox="0 0 32 32"><rect x="1" y="1" width="30" height="30" rx="9" fill="#0f8b7d"/><path d="M13 8.5a3 3 0 0 0-3 3 3 3 0 0 0-2 5 3 3 0 0 0 1.5 4.6A3 3 0 0 0 13 24V8.5zM19 8.5a3 3 0 0 1 3 3 3 3 0 0 1 2 5 3 3 0 0 1-1.5 4.6A3 3 0 0 1 19 24V8.5zM13 8.5a3 3 0 0 1 6 0" fill="none" stroke="#fff" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg>
+  </div>
+  <div id="app"></div>
+  <noscript><p style="padding:24px;font-family:system-ui">Brain Evolution needs JavaScript.</p></noscript>
+  <script type="importmap">
+{
+  "imports": {
+    "./js/achievements.js": "./js/achievements.js?v=3.12.4",
+    "./js/app.js": "./js/app.js?v=3.12.4",
+    "./js/audio.js": "./js/audio.js?v=3.12.4",
+    "./js/core/dom.js": "./js/core/dom.js?v=3.12.4",
+    "./js/core/icons.js": "./js/core/icons.js?v=3.12.4",
+    "./js/games/arithmetics-model.js": "./js/games/arithmetics-model.js?v=3.12.4",
+    "./js/games/arithmetics.js": "./js/games/arithmetics.js?v=3.12.4",
+    "./js/games/encyclopedia-model.js": "./js/games/encyclopedia-model.js?v=3.12.4",
+    "./js/games/encyclopedia.js": "./js/games/encyclopedia.js?v=3.12.4",
+    "./js/games/geometry-model.js": "./js/games/geometry-model.js?v=3.12.4",
+    "./js/games/geometry.js": "./js/games/geometry.js?v=3.12.4",
+    "./js/games/guess-who-model.js": "./js/games/guess-who-model.js?v=3.12.4",
+    "./js/games/guess_who.js": "./js/games/guess_who.js?v=3.12.4",
+    "./js/games/matches-model.js": "./js/games/matches-model.js?v=3.12.4",
+    "./js/games/matches.js": "./js/games/matches.js?v=3.12.4",
+    "./js/games/memorics-model.js": "./js/games/memorics-model.js?v=3.12.4",
+    "./js/games/memorics.js": "./js/games/memorics.js?v=3.12.4",
+    "./js/games/minesweeper-model.js": "./js/games/minesweeper-model.js?v=3.12.4",
+    "./js/games/minesweeper.js": "./js/games/minesweeper.js?v=3.12.4",
+    "./js/games/numbers-model.js": "./js/games/numbers-model.js?v=3.12.4",
+    "./js/games/numbers.js": "./js/games/numbers.js?v=3.12.4",
+    "./js/games/pairs-model.js": "./js/games/pairs-model.js?v=3.12.4",
+    "./js/games/pairs.js": "./js/games/pairs.js?v=3.12.4",
+    "./js/games/quadronica.js": "./js/games/quadronica.js?v=3.12.4",
+    "./js/games/restored-game.js": "./js/games/restored-game.js?v=3.12.4",
+    "./js/games/results-window.js": "./js/games/results-window.js?v=3.12.4",
+    "./js/games/roadblocks-model.js": "./js/games/roadblocks-model.js?v=3.12.4",
+    "./js/games/roadblocks.js": "./js/games/roadblocks.js?v=3.12.4",
+    "./js/games/sudoku-model.js": "./js/games/sudoku-model.js?v=3.12.4",
+    "./js/games/sudoku.js": "./js/games/sudoku.js?v=3.12.4",
+    "./js/i18n.js": "./js/i18n.js?v=3.12.4",
+    "./js/original.js": "./js/original.js?v=3.12.4",
+    "./js/progression.js": "./js/progression.js?v=3.12.4",
+    "./js/records.js": "./js/records.js?v=3.12.4",
+    "./js/screens/games.js": "./js/screens/games.js?v=3.12.4",
+    "./js/screens/home.js": "./js/screens/home.js?v=3.12.4",
+    "./js/screens/index.js": "./js/screens/index.js?v=3.12.4",
+    "./js/screens/profile.js": "./js/screens/profile.js?v=3.12.4",
+    "./js/screens/progress.js": "./js/screens/progress.js?v=3.12.4",
+    "./js/screens/test.js": "./js/screens/test.js?v=3.12.4",
+    "./js/screens/training.js": "./js/screens/training.js?v=3.12.4",
+    "./js/storage.js": "./js/storage.js?v=3.12.4",
+    "./js/ui/achievements-ui.js": "./js/ui/achievements-ui.js?v=3.12.4",
+    "./js/ui/components.js": "./js/ui/components.js?v=3.12.4",
+    "./js/ui/demos.js": "./js/ui/demos.js?v=3.12.4",
+    "./js/ui/overlay.js": "./js/ui/overlay.js?v=3.12.4",
+    "./js/ui/records-ui.js": "./js/ui/records-ui.js?v=3.12.4",
+    "./js/version.js": "./js/version.js?v=3.12.4"
+  }
+}
+  </script>
+  <script type="module" src="js/app.js?v=3.12.4"></script>
+  <script>
+    // A fixed-size app: no pinch or double-tap zoom (iOS ignores user-scalable=no, so the gestures are cancelled here).
+    document.addEventListener('gesturestart', e => e.preventDefault());
+    document.addEventListener('touchmove', e => { if (e.touches.length > 1) e.preventDefault(); }, {passive: false});
+    if ('serviceWorker' in navigator) addEventListener('load', () => navigator.serviceWorker.register('sw.js').catch(() => {}));
+  </script>
+</body>
+</html>

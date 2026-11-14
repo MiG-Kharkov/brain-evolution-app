@@ -1,0 +1,61 @@
+/* guess_who — v2 styles (classes prefixed with the game id). */
+/* Object colours (the five of ant_head_game_field: orange, purple, blue, yellow, green) follow the app
+   tokens; yellow has no shell token, so it is defined here for both themes. */
+.guess_who-screen {
+  --gw-c0: var(--cat-calc);
+  --gw-c1: var(--cat-memory);
+  --gw-c2: var(--cat-logic);
+  --gw-c3: #f2c230;
+  --gw-c4: var(--cat-pattern);
+  --gw-line: var(--ink);
+  --gw-tex: rgba(16, 22, 36, .62);
+  /* game bar + status row + note + clue strip + gaps: the field takes the rest of the screen height */
+  --gw-chrome: 262px;
+}
+@media (prefers-color-scheme: dark) { :root:not([data-theme="light"]) .guess_who-screen { --gw-c3: #f5cf4a; --gw-tex: rgba(10, 14, 22, .66); } }
+:root[data-theme="dark"] .guess_who-screen { --gw-c3: #f5cf4a; --gw-tex: rgba(10, 14, 22, .66); }
+
+.gw-defs { position: absolute; width: 0; height: 0; overflow: hidden; }
+.gw-wrap { display: flex; flex-direction: column; align-items: center; gap: 10px; padding: 0 var(--pad); }
+.gw-note { margin: 0; transition: color .15s; }
+.gw-note.bad { color: var(--danger); }
+.gw-note.good { color: var(--ok); }
+
+/* Clue strip */
+.gw-clues { display: flex; justify-content: center; gap: 8px; width: 100%; }
+.gw-clue { display: flex; flex-direction: column; align-items: center; gap: 2px; flex: 0 1 76px; min-width: 0; padding: 8px 4px 6px; border-radius: var(--r-m);
+  background: var(--surface); box-shadow: var(--shadow-1); font-size: var(--fs-xs); font-weight: 700; color: var(--ink-2); }
+.gw-clue svg { width: 48px; height: 48px; max-width: 100%; display: block; }
+.gw-clue span { max-width: 100%; overflow: hidden; text-overflow: ellipsis; white-space: nowrap; }
+
+/* Field */
+.gw-field { position: relative; width: min(100%, max(240px, calc((100dvh - var(--gw-chrome)) * var(--gw-cols, 4) / var(--gw-rows, 5))));
+  aspect-ratio: var(--gw-cols, 4) / var(--gw-rows, 5); border-radius: var(--r-l); background: var(--surface); box-shadow: var(--shadow-1); touch-action: manipulation; }
+.gw-layer { position: absolute; inset: 6px; }
+.gw-obj { position: absolute; margin: 0; padding: 0; border: 0; border-radius: 22%; background: none; color: inherit; touch-action: manipulation;
+  -webkit-tap-highlight-color: transparent; transition: opacity .2s, transform .15s, background .15s, box-shadow .15s; animation: gw-in .28s ease both; }
+.gw-obj svg { display: block; width: 100%; height: 100%; overflow: visible; }
+@media (hover: hover) { .gw-obj:not(:disabled):hover { background: var(--surface-2); } }
+.gw-obj:not(:disabled):active { transform: scale(.94); }
+.guess_who-screen .gw-obj:disabled { cursor: default; opacity: 1; } /* overrides the v1 rule for disabled buttons */
+.guess_who-screen .gw-obj.is-wrong { opacity: .22; filter: grayscale(.7); animation: gw-shake .35s ease; }
+.gw-obj.is-right { background: var(--ok-soft); box-shadow: 0 0 0 3px var(--ok); animation: gw-pop .45s ease both; z-index: 1; }
+.gw-field.is-solved .gw-obj:not(.is-right) { opacity: .2; }
+
+/* Object drawing */
+.gw-ant { fill: none; stroke: var(--gw-line); stroke-width: 3.2; stroke-linecap: round; stroke-linejoin: round; }
+.gw-ant .gw-fill { fill: var(--gw-line); stroke: none; }
+.gw-outline { fill: none; stroke: var(--gw-line); stroke-width: 2.6; stroke-linejoin: round; }
+.gw-c0 { fill: var(--gw-c0); }
+.gw-c1 { fill: var(--gw-c1); }
+.gw-c2 { fill: var(--gw-c2); }
+.gw-c3 { fill: var(--gw-c3); }
+.gw-c4 { fill: var(--gw-c4); }
+.gw-tex-ink { fill: var(--gw-tex); }
+.gw-tex-ring { fill: none; stroke: var(--gw-tex); stroke-width: 1.5; }
+.gw-tex-base { fill: var(--ink-3); }
+.gw-shape-clue { fill: var(--surface-3); stroke: var(--ink-2); stroke-width: 3; stroke-linejoin: round; }
+
+@keyframes gw-in { from { opacity: 0; transform: scale(.85); } }
+@keyframes gw-pop { 0% { transform: scale(1); } 45% { transform: scale(1.12); } 100% { transform: scale(1.06); } }
+@keyframes gw-shake { 20%, 60% { transform: translateX(-5px); } 40%, 80% { transform: translateX(5px); } }

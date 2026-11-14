@@ -1,0 +1,81 @@
+/* memorics — v2 styles (classes prefixed with the game id). Figures: inline SVG in the figure palette below. */
+.memorics-screen .game-footer { background: none; border: 0; color: inherit; text-align: initial; padding: 8px var(--pad) calc(14px + env(safe-area-inset-bottom, 0px)); }
+/* Figure palette (cr_col1..4: blue, green, red, yellow), one set per theme. */
+.memorics-screen { --mem-c1: #2f74e0; --mem-c2: #22a052; --mem-c3: #e2433f; --mem-c4: #f2bf0c; --mem-pulse: 1.2s; --mem-spin: 2.6s; }
+@media (prefers-color-scheme: dark) {
+  :root:not([data-theme="light"]) .memorics-screen { --mem-c1: #5b9bff; --mem-c2: #45c97a; --mem-c3: #ff6b66; --mem-c4: #ffd43b; }
+}
+:root[data-theme="dark"] .memorics-screen { --mem-c1: #5b9bff; --mem-c2: #45c97a; --mem-c3: #ff6b66; --mem-c4: #ffd43b; }
+
+.mem-board { margin: 0 10px; padding: 12px; gap: 12px; }
+.mem-head { min-height: 68px; display: flex; flex-direction: column; align-items: center; justify-content: center; gap: 6px; text-align: center; }
+.mem-title { font-size: var(--fs-l); font-weight: 750; text-wrap: balance; }
+.mem-lead { font-size: var(--fs-s); font-weight: 650; color: var(--ink-2); }
+.mem-q { display: flex; flex-wrap: wrap; align-items: center; justify-content: center; gap: 6px; font-weight: 750; font-size: var(--fs-m); }
+.mem-q-end { color: var(--ink-2); font-weight: 650; }
+.mem-q.is-small { gap: 4px; }
+.mem-q.is-small .mem-chip { min-height: 28px; font-size: var(--fs-s); padding: 0 10px 0 6px; }
+.mem-q.is-small .mem-q-end { font-size: var(--fs-s); }
+.mem-chip { display: inline-flex; align-items: center; gap: 6px; min-height: 34px; padding: 0 12px 0 8px; border-radius: 999px; background: var(--surface-2); font-size: var(--fs-m); font-weight: 800; }
+.mem-dot { width: 18px; height: 18px; border-radius: 50%; background: var(--fig); box-shadow: inset 0 0 0 1.5px color-mix(in srgb, var(--fig) 70%, var(--ink)); }
+.mem-fig.mini { width: 22px; height: 22px; visibility: visible; }
+
+.mem-grid { position: relative; display: grid; grid-template-columns: repeat(6, minmax(0, 1fr)); gap: 6px; }
+.mem-cell {
+  position: relative; aspect-ratio: 1; padding: 0; border: 0; border-radius: 12px; background: var(--surface-2); color: var(--ink);
+  display: flex; align-items: center; justify-content: center; touch-action: manipulation; transition: background .12s, box-shadow .12s;
+}
+.mem-board[data-phase="answer"] .mem-cell:not(.is-found):not(.is-crossed) { cursor: pointer; }
+.mem-board[data-phase="answer"] .mem-cell:not(.is-found):not(.is-crossed):active { background: var(--surface-3); }
+.mem-cell .mem-fig { width: 78%; height: 78%; visibility: hidden; overflow: visible; }
+.mem-cell.has-fig .mem-fig { visibility: visible; }
+.mem-fig .mem-shape > * { fill: var(--fig); stroke: color-mix(in srgb, var(--fig) 72%, var(--ink)); stroke-width: 3; }
+.mem-shape { transform-box: view-box; transform-origin: 50% 50%; }
+.mem-fig.is-pulse .mem-shape { animation: mem-pulse var(--mem-pulse) ease-in-out infinite; animation-delay: calc(var(--ph, 0) * -1 * var(--mem-pulse)); }
+.mem-fig.is-spin .mem-shape { animation: mem-spin var(--mem-spin) linear infinite; animation-delay: calc(var(--ph, 0) * -1 * var(--mem-spin)); }
+@keyframes mem-pulse { 0%, 100% { transform: scale(1); } 50% { transform: scale(.58); } }
+@keyframes mem-spin { to { transform: rotate(360deg); } }
+.mem-board.is-paused .mem-shape { animation-play-state: paused; }
+
+.mem-badge { position: absolute; top: 3px; right: 3px; width: 18px; height: 18px; border-radius: 50%; display: none; align-items: center; justify-content: center; color: #fff; }
+.mem-badge svg { width: 12px; height: 12px; stroke-width: 3; }
+.mem-cell.is-found { background: var(--ok-soft); box-shadow: inset 0 0 0 2px var(--ok); }
+.mem-cell.is-found .mem-badge { display: flex; background: var(--ok); }
+.mem-cell.is-crossed { background: var(--danger-soft); box-shadow: inset 0 0 0 2px var(--danger); }
+.mem-cell.is-crossed .mem-badge { display: flex; background: var(--danger); }
+.mem-board[data-phase="answer"] .mem-cell.is-crossed .mem-badge, .mem-board[data-phase="done"] .mem-cell.is-crossed .mem-badge {
+  inset: 0; width: auto; height: auto; background: none; color: var(--danger); }
+.mem-board[data-phase="answer"] .mem-cell.is-crossed .mem-badge svg, .mem-board[data-phase="done"] .mem-cell.is-crossed .mem-badge svg { width: 46%; height: 46%; }
+.mem-cell.is-missed { box-shadow: inset 0 0 0 2px var(--reward); background: var(--reward-soft); }
+.mem-cell.is-shake { animation: shake .35s ease; }
+
+.mem-mask { position: absolute; inset: -4px; z-index: 2; display: none; align-items: center; justify-content: center; border-radius: 14px;
+  background: var(--surface); color: var(--ink-3); font-weight: 750; font-size: var(--fs-l); }
+.mem-board.is-masked .mem-mask { display: flex; }
+
+.mem-meta { min-height: 24px; display: flex; align-items: center; gap: 10px; }
+.mem-bar { flex: 1; height: 6px; }
+.mem-bar > i { transition: width 1s linear; }
+.mem-left { font-size: var(--fs-s); font-weight: 700; color: var(--ink-2); white-space: nowrap; margin-left: auto; }
+.mem-bar + .mem-left { margin-left: 0; min-width: 3.2em; text-align: right; }
+.mem-dots { display: flex; flex-wrap: wrap; gap: 5px; }
+.mem-dots i { width: 12px; height: 12px; border-radius: 50%; background: var(--surface-3); }
+.mem-dots i.ok { background: var(--ok); }
+.mem-dots i.bad { background: var(--danger); }
+.mem-legend { display: flex; flex-wrap: wrap; gap: 4px 14px; font-size: var(--fs-s); color: var(--ink-2); font-weight: 650; }
+.mem-legend span { display: inline-flex; align-items: center; gap: 6px; }
+.mem-legend b { color: var(--ink); }
+.mem-legend i { width: 14px; height: 14px; border-radius: 4px; box-shadow: inset 0 0 0 2px var(--ok); background: var(--ok-soft); }
+.mem-legend i.bad { box-shadow: inset 0 0 0 2px var(--danger); background: var(--danger-soft); }
+.mem-legend i.miss { box-shadow: inset 0 0 0 2px var(--reward); background: var(--reward-soft); }
+.memorics-screen .game-footer .btn.mem-idle { visibility: hidden; }
+
+/* The states are the game itself, so with reduced motion they stay, but softer: pulsing becomes a
+   fade, rotation slows down. */
+@media (prefers-reduced-motion: reduce) {
+  .memorics-screen .mem-fig.is-pulse .mem-shape { animation: mem-fade 1.8s ease-in-out infinite !important; animation-delay: calc(var(--ph, 0) * -1.8s) !important; }
+  .memorics-screen .mem-fig.is-spin .mem-shape { animation: mem-spin 6s linear infinite !important; animation-delay: calc(var(--ph, 0) * -6s) !important; }
+  .memorics-screen .mem-board.is-paused .mem-shape { animation-play-state: paused !important; }
+}
+@keyframes mem-fade { 0%, 100% { opacity: 1; } 50% { opacity: .3; } }
+@media (max-height: 700px) { .mem-head { min-height: 56px; } .mem-board { gap: 8px; } }

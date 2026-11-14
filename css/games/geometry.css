@@ -1,0 +1,64 @@
+/* geometry — v2 styles (classes prefixed with the game id). */
+
+.geometry-screen { --geo-orig: var(--accent); --geo-copy: var(--cat-logic); }
+/* The v2 footer: no v1 panel behind the buttons. */
+.geometry-screen .game-footer { background: none; border: 0; color: inherit; text-align: initial; padding: 8px var(--pad) calc(16px + env(safe-area-inset-bottom, 0px)); }
+
+.geo-board { gap: 12px; padding: 14px; }
+.geo-note { min-height: 1.4em; }
+
+/* Square drawing board; narrower on short screens so that the buttons stay on screen. */
+.geo-field {
+  display: block; width: min(100%, calc(100dvh - 356px)); aspect-ratio: 1; margin: 0 auto; border-radius: 14px;
+  background: var(--surface-2); box-shadow: inset 0 0 0 1px var(--line); overflow: hidden;
+  touch-action: none; user-select: none; -webkit-user-select: none; -webkit-touch-callout: none; cursor: crosshair;
+}
+/* The comparison has the verdict under the board instead of the tip: on a short screen the board gives it the room. */
+.geo-field.is-compare { width: min(100%, calc(100dvh - 420px)); }
+.geo-field:focus-visible { outline: 2px solid var(--focus); outline-offset: 2px; }
+.geo-field * { vector-effect: non-scaling-stroke; }
+.geo-grid { fill: none; stroke: var(--line); stroke-width: 1px; }
+.geo-orig { fill: color-mix(in srgb, var(--geo-orig) 14%, transparent); stroke: var(--geo-orig); stroke-width: 3px; stroke-linejoin: round; }
+.geo-orig-dot { fill: var(--geo-orig); stroke: var(--surface-2); stroke-width: 2px; }
+.geo-field.is-compare .geo-orig { fill: none; stroke-dasharray: 7 5; stroke-width: 2.5px; }
+.geo-copy { fill: none; stroke: var(--geo-copy); stroke-width: 3px; stroke-linejoin: round; stroke-linecap: round; }
+polygon.geo-copy { fill: color-mix(in srgb, var(--geo-copy) 12%, transparent); }
+.geo-copy-dot { fill: var(--surface); stroke: var(--geo-copy); stroke-width: 2.5px; transition: r .12s; }
+.geo-copy-dot.is-active { fill: var(--geo-copy); }
+/* comparison: a vertex whose angle is far from the original (3.12.3) */
+.geo-copy-dot.is-off { fill: var(--danger); stroke: var(--danger); }
+.geo-cursor { fill: none; stroke: var(--focus); stroke-width: 2px; stroke-linecap: round; }
+.geo-hidden { fill: var(--ink-3); font: 700 6px var(--font); text-anchor: middle; }
+
+.geo-meta { display: flex; align-items: center; justify-content: space-between; gap: 10px; min-height: 28px; flex-wrap: wrap; }
+.geo-count { font-size: var(--fs-s); padding: 4px 10px; }
+.geo-info { display: inline-flex; align-items: center; gap: 8px; font-weight: 750; font-size: var(--fs-s); color: var(--ink-2); font-variant-numeric: tabular-nums; }
+.geo-info svg { width: 16px; height: 16px; color: var(--ink-3); }
+.geo-dots { display: inline-flex; flex-wrap: wrap; gap: 4px; max-width: 150px; }
+.geo-dots i { width: 9px; height: 9px; border-radius: 50%; background: var(--surface-3); transition: background .12s; }
+.geo-dots i.on { background: var(--geo-copy); }
+.geo-legend { display: inline-flex; align-items: center; justify-content: center; flex-wrap: wrap; gap: 2px 6px; font-weight: 600; }
+/* in the comparison the count of vertices is hidden and the legend takes the row */
+.geo-count[hidden] + .geo-info { margin: 0 auto; }
+.geo-legend i { width: 18px; height: 0; border-top: 3px solid var(--geo-copy); border-radius: 2px; }
+.geo-legend i.geo-key-orig { border-top: 3px dashed var(--geo-orig); }
+.geo-legend i.geo-key-copy { margin-left: 8px; }
+.geo-legend i.geo-key-off { margin-left: 8px; width: 10px; height: 10px; border: 0; border-radius: 50%; background: var(--danger); }
+.geo-timer { height: 6px; }
+.geo-timer > i { transition: width 1s linear; }
+
+.geo-verdict {
+  display: flex; flex-direction: column; align-items: center; gap: 2px; padding: 10px 12px; border-radius: 14px; text-align: center;
+  background: var(--ok-soft); color: var(--ok); animation: pop .3s ease;
+}
+.geo-verdict b { font: 800 var(--fs-xl)/1.2 var(--font-round); }
+.geo-verdict span { color: var(--ink-2); font-size: var(--fs-s); font-weight: 600; }
+.geo-verdict.is-mid { background: var(--reward-soft); color: var(--reward); }
+.geo-verdict.is-bad { background: var(--danger-soft); color: var(--danger); }
+
+.geo-tip { margin: 10px var(--pad) 0; text-align: center; font-size: var(--fs-s); color: var(--ink-3); text-wrap: balance; }
+
+.geo-actions { display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 10px; }
+.geo-actions .geo-wide { grid-column: 1 / -1; }
+.geo-actions .btn { padding: 0 12px; min-width: 0; }
+@media (max-width: 359px) { .geo-actions .btn { font-size: var(--fs-m); } .geo-verdict span, .geo-legend { font-size: var(--fs-xs); } }
