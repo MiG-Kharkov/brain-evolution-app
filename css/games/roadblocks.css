@@ -1,0 +1,49 @@
+/* roadblocks — v2 styles (classes prefixed with the game id). Field: inline SVG, colours from tokens. */
+.roadblocks-screen .game-footer { background: none; border: 0; color: inherit; text-align: initial; padding: 8px var(--pad) calc(14px + env(safe-area-inset-bottom, 0px)); }
+.roadblocks-screen { --rb-floor: var(--surface-2); --rb-grid: var(--line); --rb-block: var(--ink-2); --rb-ball: var(--reward); }
+@media (prefers-color-scheme: dark) { :root:not([data-theme="light"]) .roadblocks-screen { --rb-block: var(--ink-3); } }
+:root[data-theme="dark"] .roadblocks-screen { --rb-block: var(--ink-3); }
+
+.rb-board { margin: 0 8px; padding: 10px; gap: 8px; }
+.rb-note { min-height: 2.8em; display: flex; align-items: center; justify-content: center; line-height: 1.35; }
+.rb-field {
+  --rb-cols: 18; --rb-rows: 22;
+  position: relative; align-self: center; aspect-ratio: var(--rb-cols) / var(--rb-rows); border-radius: 12px;
+  width: min(100%, max(230px, calc((100dvh - 340px) * var(--rb-cols) / var(--rb-rows))));
+}
+.rb-svg { display: block; width: 100%; height: 100%; touch-action: none; user-select: none; -webkit-user-select: none; cursor: pointer; }
+.rb-floor { fill: var(--rb-floor); }
+.rb-grid { fill: none; stroke: var(--rb-grid); stroke-width: 1; }
+.rb-block { fill: var(--rb-block); }
+.rb-exit rect { fill: var(--accent); }
+.rb-exit path { fill: var(--accent-ink); }
+.rb-start { fill: none; stroke: var(--ink-3); stroke-width: 1.5; stroke-dasharray: 3 3; }
+.rb-ball circle { fill: var(--rb-ball); }
+.rb-ball .rb-ball-shine { fill: #fff; opacity: .55; }
+/* SVG transform attributes stay untouched: blocks scale (no transform attribute), exits only blink. */
+.rb-block.rb-hit { animation: rb-hit .32s ease; transform-box: fill-box; transform-origin: center; }
+.rb-exit.rb-hit { animation: rb-blink .45s ease; }
+@keyframes rb-hit { 40% { opacity: .55; transform: scale(.86); } }
+@keyframes rb-blink { 30% { opacity: .35; } }
+.rb-field.rb-lost { animation: rb-lost .45s ease; }
+@keyframes rb-lost { 30% { box-shadow: 0 0 0 3px var(--danger); } 100% { box-shadow: 0 0 0 0 transparent; } }
+
+.rb-done { position: absolute; inset: 0; display: flex; align-items: center; justify-content: center; padding: 16px; border-radius: 12px;
+  background: color-mix(in srgb, var(--surface) 55%, transparent); backdrop-filter: blur(2px); -webkit-backdrop-filter: blur(2px); }
+.rb-done-card { width: min(100%, 280px); display: flex; flex-direction: column; align-items: center; gap: 8px; padding: 18px 16px 16px; text-align: center;
+  background: var(--surface); border-radius: var(--r-l); box-shadow: var(--shadow-2); animation: pop .3s ease; }
+.rb-done-card b { font-size: var(--fs-l); }
+.rb-done-card .btn { margin-top: 6px; }
+.rb-done-icon { width: 44px; height: 44px; border-radius: 50%; display: flex; align-items: center; justify-content: center; background: var(--ok-soft); color: var(--ok); }
+.rb-done-icon svg { width: 26px; height: 26px; }
+
+/* Arrow pad laid out like keyboard arrows: up on top, left / down / right below. */
+.rb-pad { display: grid; grid-template-columns: repeat(3, minmax(0, 84px)); grid-template-areas: ". up ." "left down right"; gap: 8px; justify-content: center; }
+.rb-key { min-height: 52px; border: 0; border-radius: 14px; background: var(--surface); box-shadow: var(--shadow-1); color: var(--ink);
+  display: flex; align-items: center; justify-content: center; touch-action: manipulation; transition: transform .06s, background .1s; }
+.rb-key svg { width: 30px; height: 30px; }
+.rb-key path { fill: currentColor; }
+.rb-key:active { transform: scale(.95); background: var(--surface-2); }
+.rb-key:disabled { opacity: .4; cursor: default; transform: none; }
+.rb-key-up { grid-area: up; } .rb-key-left { grid-area: left; } .rb-key-down { grid-area: down; } .rb-key-right { grid-area: right; }
+@media (max-height: 700px) { .rb-key { min-height: 46px; } .rb-note { min-height: 2.6em; } }

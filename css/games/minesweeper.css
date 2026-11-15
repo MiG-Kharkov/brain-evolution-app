@@ -1,0 +1,57 @@
+/* minesweeper — v2 styles (classes prefixed with the game id). Cells follow the column width and the
+   screen height, up to 44 px; a board that does not fit scrolls inside its card, never the page.
+   3.6: the fields are 9, 9 and 10 columns wide (were 9, 12 and 13), so on a 390 px phone a cell is 37, 37 and
+   33 px (was 37, 27 and 26): the cells of the 12-column field were hard to hit. */
+.ms-board { padding: 4px; gap: 0; }
+.ms-board.boom { animation: shake .35s ease; }
+.ms-scroll { container-type: inline-size; overflow: auto; overscroll-behavior: contain; border-radius: 8px; }
+.ms-grid {
+  --ms-gap: 2px;
+  --ms-cell: clamp(22px, calc((min(100vw, 560px) - 40px - (var(--ms-cols) - 1) * var(--ms-gap)) / var(--ms-cols)), 44px);
+  --ms-closed: color-mix(in srgb, var(--cat-logic) 20%, var(--surface-2));
+  display: grid; grid-template-columns: repeat(var(--ms-cols), var(--ms-cell)); grid-auto-rows: var(--ms-cell); gap: var(--ms-gap);
+  width: max-content; margin: 0 auto; touch-action: manipulation; user-select: none; -webkit-user-select: none; -webkit-touch-callout: none;
+}
+.ms-grid.dense { --ms-gap: 1px; }
+@supports (width: 1cqw) and (height: 1dvh) {
+  .ms-grid { --ms-cell: clamp(22px, min((100cqw - (var(--ms-cols) - 1) * var(--ms-gap)) / var(--ms-cols), (100dvh - 250px) / var(--ms-rows)), 44px); }
+}
+.ms-cell {
+  min-width: 0; margin: 0; padding: 0; border: 0; border-radius: calc(var(--ms-cell) * .18); background: var(--ms-closed); color: var(--ink);
+  box-shadow: inset 0 -2px 0 color-mix(in srgb, var(--ink) 14%, transparent); display: flex; align-items: center; justify-content: center;
+  font: 800 calc(var(--ms-cell) * .54)/1 var(--font-round); font-variant-numeric: tabular-nums; -webkit-tap-highlight-color: transparent;
+  transition: background-color .1s ease;
+}
+.ms-cell svg { width: 64%; height: 64%; }
+.ms-cell:focus-visible { outline: 2px solid var(--focus); outline-offset: 0; z-index: 1; }
+@media (hover: hover) { .ms-cell:not(.open):not(.blown):hover { background: color-mix(in srgb, var(--cat-logic) 30%, var(--surface-2)); } }
+.ms-cell:not(.open):not(.blown):active { transform: scale(.94); }
+/* A held finger: the cell fills from the edges while the long press runs, then the flag appears (--ms-hold is set
+   by the game to the length of the long press). The first third is still, so a plain tap does not flash. */
+.ms-cell.holding { animation: ms-hold var(--ms-hold, 300ms) linear both; }
+@keyframes ms-hold {
+  0%, 30% { box-shadow: inset 0 0 0 0 color-mix(in srgb, var(--danger) 45%, transparent); }
+  100% { box-shadow: inset 0 0 0 calc(var(--ms-cell) / 2) color-mix(in srgb, var(--danger) 45%, transparent); }
+}
+.ms-cell.open { background: var(--surface-2); box-shadow: none; cursor: default; }
+.ms-cell.flag { color: var(--danger); }
+.ms-grid.flagging .ms-cell:not(.open):not(.blown) { box-shadow: inset 0 -2px 0 color-mix(in srgb, var(--danger) 40%, transparent); }
+.ms-cell.blown { background: var(--danger); color: var(--surface); box-shadow: none; }
+.ms-cell.n1 { color: var(--cat-logic); }
+.ms-cell.n2 { color: var(--ok); }
+.ms-cell.n3 { color: var(--danger); }
+.ms-cell.n4 { color: var(--cat-memory); }
+.ms-cell.n5 { color: var(--cat-calc); }
+.ms-cell.n6 { color: var(--cat-spatial); }
+.ms-cell.n7 { color: var(--ink); }
+.ms-cell.n8 { color: var(--ink-3); }
+.ms-grid.won .ms-cell.open { background: color-mix(in srgb, var(--ok) 12%, var(--surface-2)); }
+
+.ms-controls { display: flex; flex-direction: column; align-items: center; gap: 8px; padding: 12px var(--pad) 0; }
+.ms-mode { width: min(100%, 320px); }
+.ms-mode button { display: inline-flex; align-items: center; justify-content: center; gap: 6px; min-height: 40px; }
+.ms-mode button svg { width: 18px; height: 18px; flex: none; }
+.ms-mode button[data-mode="flag"] svg { color: var(--danger); }
+.ms-hint-keys { display: none; }
+@media (hover: hover) and (pointer: fine) { .ms-hint-touch { display: none; } .ms-hint-keys { display: block; } }
+@media (prefers-reduced-motion: reduce) { .ms-board.boom, .ms-cell.holding { animation: none; } }

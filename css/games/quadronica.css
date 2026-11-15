@@ -1,0 +1,97 @@
+/* quadronica — v2 styles (classes prefixed with the game id). */
+/* Tile colours: shell tokens, so both themes follow the app palette. The first four are the most distinct
+   (easy uses 4 colours, medium and hard 5; the sixth is kept for custom rules). Each colour also has its own faint glyph for colour-blind players. */
+.quadronica-screen, .quad-demo {
+  --quad-c0: var(--danger);
+  --quad-c1: var(--reward);
+  --quad-c2: var(--cat-pattern);
+  --quad-c3: var(--cat-logic);
+  --quad-c4: var(--cat-memory);
+  --quad-c5: var(--cat-spatial);
+  --quad-glyph: rgba(255, 255, 255, .5);
+  /* game bar + status row + time bar + note + gaps: the board takes the rest of the screen height */
+  --quad-chrome: 178px;
+}
+
+.quad-wrap { display: flex; flex-direction: column; align-items: center; gap: 8px; padding: 0 var(--pad); }
+.quad-time { width: 100%; height: 4px; border-radius: 2px; background: var(--surface-3); overflow: hidden; }
+.quad-time i { display: block; height: 100%; background: var(--accent); transform-origin: left center; transition: transform 1s linear, background .3s; }
+.quad-time.low i { background: var(--danger); }
+.quad-note { margin: 0; }
+
+.quad-board {
+  position: relative; display: grid; grid-template-columns: repeat(var(--cols), minmax(0, 1fr)); grid-template-rows: repeat(var(--rows), minmax(0, 1fr));
+  width: min(100%, max(240px, calc((100dvh - var(--quad-chrome)) * var(--cols) / var(--rows))));
+  aspect-ratio: var(--cols) / var(--rows); padding: 4px; border-radius: var(--r-l); background: var(--surface); box-shadow: var(--shadow-1);
+  touch-action: manipulation; user-select: none; -webkit-user-select: none; outline: 2px solid transparent; outline-offset: 2px; transition: outline-color .2s;
+}
+.quad-board.is-wrong { animation: quad-shake .35s ease; outline-color: var(--danger); }
+
+/* The whole cell is the touch target; the coloured tile is inset inside it. */
+.quad-cell { position: relative; min-width: 0; min-height: 0; margin: 0; padding: 0; border: 0; border-radius: 10px; background: none; color: inherit;
+  touch-action: manipulation; -webkit-tap-highlight-color: transparent; }
+.quad-cell:focus-visible { outline-offset: -1px; }
+.quad-tile { position: absolute; inset: 6%; border-radius: 26%; background: var(--quad-c, var(--surface-3));
+  box-shadow: inset 0 -2px 0 rgba(0, 0, 0, .16), inset 0 1px 0 rgba(255, 255, 255, .28); transition: transform .12s ease, box-shadow .12s ease; }
+.quad-tile::after { content: ""; position: absolute; inset: 33%; background: var(--quad-glyph); }
+.quad-tile[data-color="0"] { --quad-c: var(--quad-c0); }
+.quad-tile[data-color="1"] { --quad-c: var(--quad-c1); }
+.quad-tile[data-color="2"] { --quad-c: var(--quad-c2); }
+.quad-tile[data-color="3"] { --quad-c: var(--quad-c3); }
+.quad-tile[data-color="4"] { --quad-c: var(--quad-c4); }
+.quad-tile[data-color="5"] { --quad-c: var(--quad-c5); }
+.quad-tile[data-color="0"]::after { clip-path: circle(42% at 50% 50%); }
+.quad-tile[data-color="1"]::after { clip-path: polygon(50% 0, 100% 50%, 50% 100%, 0 50%); }
+.quad-tile[data-color="2"]::after { clip-path: polygon(50% 4%, 100% 92%, 0 92%); }
+.quad-tile[data-color="3"]::after { clip-path: inset(10% round 18%); }
+.quad-tile[data-color="4"]::after { clip-path: polygon(36% 0, 64% 0, 64% 36%, 100% 36%, 100% 64%, 64% 64%, 64% 100%, 36% 100%, 36% 64%, 0 64%, 0 36%, 36% 36%); }
+.quad-tile[data-color="5"]::after { clip-path: polygon(50% 0, 61% 35%, 98% 35%, 68% 57%, 79% 92%, 50% 71%, 21% 92%, 32% 57%, 2% 35%, 39% 35%); }
+
+@media (hover: hover) { .quad-cell:hover .quad-tile { transform: scale(1.05); } }
+.quad-cell:active .quad-tile { transform: scale(.93); }
+.quad-cell.is-marked .quad-tile { transform: scale(.84); box-shadow: 0 0 0 3px var(--surface), 0 0 0 5.5px var(--ink); }
+.quad-cell.is-marked .quad-tile::after { background: #fff; }
+.quad-cell.is-new .quad-tile:not(.quad-ghost) { animation: quad-in .26s cubic-bezier(.2, .9, .3, 1.3) var(--quad-delay, 110ms) both; }
+/* the removed tile: flashes, swells a little and bursts; it never takes a tap */
+.quad-ghost { z-index: 1; pointer-events: none; animation: quad-out .3s ease-in forwards; }
+
+/* Overlays are placed on the grid area of the rectangle. */
+.quad-hit { position: absolute; inset: 0; border-radius: 12px; border: 3px solid var(--ok); background: color-mix(in srgb, var(--ok) 22%, transparent);
+  pointer-events: none; z-index: 2; animation: quad-hit .5s ease-out forwards; }
+.quad-badge { position: absolute; left: 50%; top: 50%; translate: -50% -50%; padding: 4px 12px; border-radius: 999px;
+  background: var(--surface); box-shadow: var(--shadow-2); font: 800 var(--fs-l)/1.2 var(--font-round); font-variant-numeric: tabular-nums;
+  pointer-events: none; z-index: 3; white-space: nowrap; animation: quad-rise 1s ease-out forwards; }
+.quad-badge.good { color: var(--ok); }
+.quad-badge.bad { color: var(--danger); }
+
+@keyframes quad-in { from { transform: scale(.2); opacity: 0; } }
+@keyframes quad-out { 0% { transform: scale(1); opacity: 1; filter: brightness(1.7) saturate(.6); } 30% { transform: scale(1.16); opacity: 1; filter: brightness(1.35); }
+  100% { transform: scale(.05) rotate(40deg); opacity: 0; } }
+@keyframes quad-hit { 0% { opacity: 1; } 100% { opacity: 0; transform: scale(1.04); } }
+@keyframes quad-rise { 0% { opacity: 0; transform: translateY(8px) scale(.6); } 14% { opacity: 1; transform: scale(1.18); } 26% { transform: none; } 72% { opacity: 1; } 100% { opacity: 0; transform: translateY(-22px); } }
+@keyframes quad-shake { 20%, 60% { transform: translateX(-5px); } 40%, 80% { transform: translateX(5px); } }
+
+/* Hint (in-game lightbulb) and the rules example: the corners pulse, a dashed frame shows the rectangle. */
+.quad-hint { position: absolute; inset: 0; border-radius: 12px; border: 3px dashed var(--ink); pointer-events: none; z-index: 1;
+  animation: quad-hint 1s ease-in-out infinite alternate; }
+.quad-cell.is-hint .quad-tile { animation: quad-pulse .7s ease-in-out infinite alternate; box-shadow: 0 0 0 3px var(--surface), 0 0 0 5.5px var(--accent); }
+.quad-cell.is-tap::before { content: ""; position: absolute; inset: 4%; border-radius: 50%; border: 3px solid var(--ink); pointer-events: none; z-index: 2;
+  animation: quad-tap .6s ease-out forwards; }
+@keyframes quad-hint { from { opacity: .45; } to { opacity: 1; } }
+@keyframes quad-pulse { to { transform: scale(.86); } }
+@keyframes quad-tap { from { transform: scale(.4); opacity: 1; } to { transform: scale(1.25); opacity: 0; } }
+.quad-demo .quad-board { width: min(100%, 250px); margin: 0 auto; }
+.quad-tools { display: flex; justify-content: center; }
+/* the hint button under the board takes height from the board */
+.quadronica-screen:has(.quad-tools) { --quad-chrome: 246px; }
+
+/* Reduced motion: the feedback stays, as a plain fade (the global rule would cut every animation to nothing). */
+@media (prefers-reduced-motion: reduce) {
+  .quad-ghost { animation: quad-fade-out .3s linear forwards !important; animation-duration: .3s !important; }
+  .quad-cell.is-new .quad-tile:not(.quad-ghost) { animation: quad-fade-in .3s linear both !important; animation-duration: .3s !important; }
+  .quad-badge { animation: quad-fade-badge 1s linear forwards !important; animation-duration: 1s !important; }
+  .quad-hit { animation: quad-fade-out .5s linear forwards !important; animation-duration: .5s !important; }
+}
+@keyframes quad-fade-out { to { opacity: 0; } }
+@keyframes quad-fade-in { from { opacity: 0; } }
+@keyframes quad-fade-badge { 0%, 70% { opacity: 1; } 100% { opacity: 0; } }

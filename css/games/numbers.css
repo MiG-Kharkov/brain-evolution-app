@@ -1,0 +1,53 @@
+/* numbers — v2 styles (classes prefixed with the game id). */
+.numbers-screen .game-footer { background: none; border: 0; color: inherit; text-align: initial; padding: 8px var(--pad) calc(14px + env(safe-area-inset-bottom, 0px)); }
+
+.num-board { margin: 0 10px; padding: 12px; gap: 12px; }
+.num-board.is-wrong { animation: shake .35s ease; }
+.num-task { display: flex; flex-direction: column; align-items: center; gap: 2px; text-align: center; }
+.num-task-label { font-size: var(--fs-s); font-weight: 650; color: var(--ink-2); }
+.num-task-values { font: 650 var(--fs-l)/1.2 var(--font-round); color: var(--ink-2); font-variant-numeric: tabular-nums; }
+.num-task-values b { font-size: 26px; font-weight: 850; color: var(--ink); }
+.num-task-values b:first-child { color: var(--accent); }
+
+.num-grid {
+  position: relative; display: grid; gap: 4px; touch-action: none; user-select: none; -webkit-user-select: none;
+  grid-template-columns: repeat(var(--cols), minmax(0, 1fr)); grid-template-rows: repeat(var(--rows), auto);
+  width: min(100%, calc(var(--cols) * 52px)); align-self: center; cursor: pointer; container-type: inline-size;
+}
+.num-cell {
+  aspect-ratio: 1; border-radius: 10px; display: flex; align-items: center; justify-content: center;
+  font: 800 min(26px, calc(100cqw / var(--cols) * .5))/1 var(--font-round); font-variant-numeric: tabular-nums; color: var(--ink);
+  transition: background .12s, color .12s, transform .12s;
+}
+.num-cell.is-empty { background: transparent; box-shadow: inset 0 0 0 1.5px var(--line); }
+.num-cell.is-digit { background: var(--surface-2); }
+.num-cell.in-window { background: var(--accent-soft); }
+.num-cell.is-cursor { background: var(--accent); color: var(--accent-ink); box-shadow: var(--shadow-1); transform: scale(1.04); z-index: 1; }
+.num-cell.is-gone { animation: num-vanish .26s ease forwards; }
+@keyframes num-vanish { to { transform: scale(.2); opacity: 0; } }
+
+.num-window { position: relative; z-index: 2; pointer-events: none; margin: -3px; border-radius: 13px; box-shadow: inset 0 0 0 2.5px var(--accent); transition: box-shadow .15s; }
+.num-window.is-wrong { box-shadow: inset 0 0 0 3px var(--danger); background: color-mix(in srgb, var(--danger) 10%, transparent); }
+.num-window.is-void { box-shadow: inset 0 0 0 3px var(--ink-3); }
+
+.num-pop { position: relative; z-index: 3; pointer-events: none; align-self: center; justify-self: center; white-space: nowrap;
+  padding: 3px 9px; border-radius: 999px; font: 800 var(--fs-s)/1.2 var(--font-round); font-variant-numeric: tabular-nums;
+  box-shadow: var(--shadow-2); animation: num-pop 1s ease forwards; }
+.num-pop.plus { background: var(--ok); color: #fff; }
+.num-pop.minus { background: var(--danger); color: #fff; }
+@keyframes num-pop { 0% { transform: translateY(0) scale(.8); opacity: 0; } 15% { transform: translateY(-6px) scale(1); opacity: 1; } 70% { opacity: 1; } 100% { transform: translateY(-26px); opacity: 0; } }
+
+.num-mask { position: absolute; inset: -6px; z-index: 4; display: none; align-items: center; justify-content: center; border-radius: 14px;
+  background: var(--surface); color: var(--ink-3); font-weight: 750; font-size: var(--fs-l); }
+.num-board.is-masked .num-mask { display: flex; }
+.num-board.is-masked .num-task-values { visibility: hidden; }
+.num-note { min-height: 1.4em; }
+@media (max-height: 700px) { .num-board { gap: 8px; } .num-task-values b { font-size: 22px; } }
+
+/* Hint (in-game lightbulb) and the rules example. */
+.num-window.is-hint { box-shadow: inset 0 0 0 3px var(--ok); background: color-mix(in srgb, var(--ok) 12%, transparent); animation: num-hint .7s ease-in-out infinite alternate; }
+@keyframes num-hint { from { opacity: .55; } to { opacity: 1; } }
+.num-demo { margin: 0; padding: 12px; gap: 10px; }
+.num-demo .num-grid { cursor: default; width: min(100%, 240px); }
+.num-actions { display: flex; gap: 8px; }
+.num-actions .btn-primary { flex: 1; }
