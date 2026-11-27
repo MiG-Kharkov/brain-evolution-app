@@ -1,0 +1,16 @@
+{
+  "games": {
+    "pairs_med_lev": {"m_nFreeLooksCount": "1", "m_nLevelCost": "6000"},
+    "MG_pairs_med": {"level_up_param": "500 7000 5 -1"},
+    "MG_pairs_easy": {"in_app_ver_level_up_param": "-1 4000 3 2", "level_up_param": "-1 4000 3 1"},
+    "MG_pairs_hard": {"level_up_param": "500 14500 10 -1"}
+  },
+  "why": {
+    "pairs_med_lev.m_nFreeLooksCount": "v2 plays the medium templates of the config (20–24 cards, v1 had 22 + 28 built-in cards) and picks them at random. With two free looks Medium was easier than Easy: the greedy player of docs/games/pairs.md §4 reached up with τ = 5 in 90 % of sessions on Medium against 55 % on Easy. One free look, as on Easy and Hard, makes Medium the middle step.",
+    "MG_pairs_med.level_up_param": "3.6 targets (docs/analytics/medium-levels.md: medium — novice 35–45 % of games, average ≥ 85 %): up 9000 → 7000 of 12000: at most 10 wrong pairs in the two fields of 20–24 cards (was 6). Novice (tau 5) 12 → 39 %, average (tau 8) 58 → 89 %, strong 100 %; games for the 5 steps (median): novice 39 → 12, average 8 → 5. Games under down (2800): novice 15 %, average 0 %. With one free look (pairs_med_lev.m_nFreeLooksCount = 1) Medium stays between Easy and Hard at every memory level. Easy stays at 4000 (novice 69 %, average 92 %): it was already inside the new Easy target.",
+    "MG_pairs_easy.in_app_ver_level_up_param": "up 4500 → 4000: at most 3 → 4 wrong pairs in the 3 fields; unlock 2 kept. Greedy player of docs/games/pairs.md §4 on the real templates and deal (tools/analysis/train_balance_pairs.mjs, it reproduces the doc's table): average (tau 8) 85 → 92 % of games, novice (tau 5) 55 → 69 % (median 5 → 4 games).",
+    "MG_pairs_easy.level_up_param": "Same threshold as in_app_ver_level_up_param (that one is read first); unlock 1 kept.",
+    "MG_pairs_hard.level_up_param": "up 15500 → 14500: at most 7 wrong pairs on the 38–44-card field instead of 5 (the average player makes 10.4). Average 13 → 29 % of games (target 20–30 %; median 72 → 34 games for the 10 steps), good (tau 12) 50 → 72 %, strong (tau 20) 88 → 97 % (target 75–90 % is not reachable together with the average's: 15500 gives strong 88 % and average 13 %), novice 2 %. Games under down (5800): average 1 %.",
+    "pairs_med_lev.m_nLevelCost": "Medium field cost 5000 → 6000: the session maximum becomes 6000 / 12000 / 18000 (3 × 2000, 2 × 6000, 1 × 18000). With 10000 the novice (tau 5: 12.7 wrong pairs on Medium at −500 each) scored less on Medium than on Easy, 3856 against 4191. Now the mean rises on every step: novice 4191 / 5722 / 7869, average 5050 / 8871 / 12805 (Hard = 1.44 × Medium), strong 5683 / 11090 / 16486 (greedy player of docs/games/pairs.md §4 with a memory of 5 / 8 / 20 moves on the real templates and deal, tools/analysis/train_balance_pairs.mjs). Time does not count in Pairs."
+  }
+}

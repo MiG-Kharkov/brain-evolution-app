@@ -1,0 +1,17 @@
+{
+  "name": "Brain Evolution",
+  "short_name": "Brain Evolution",
+  "description": "12 brain-training games, a daily training programme and the Brain Mark test.",
+  "id": "./",
+  "start_url": "./",
+  "scope": "./",
+  "display": "standalone",
+  "orientation": "portrait",
+  "background_color": "#0f8b7d",
+  "theme_color": "#0f8b7d",
+  "icons": [
+    {"src": "icons/icon-192.png", "sizes": "192x192", "type": "image/png", "purpose": "any"},
+    {"src": "icons/icon-512.png", "sizes": "512x512", "type": "image/png", "purpose": "any"},
+    {"src": "icons/icon-512.png", "sizes": "512x512", "type": "image/png", "purpose": "maskable"}
+  ]
+}
